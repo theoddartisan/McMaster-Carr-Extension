@@ -3,7 +3,7 @@ This is an extension for Google Chrome that allows for quick access to McMaster-
 
 I have always enjoyed browsing through the vast catalog of industrial supply products that McMaster-Carr offers. I wanted a way to see the full range of product offerings they have and thought that a "random" button of some kind would be fun. As I started developing the extension for that task I decided to start adding more functionality like the search bar. I am no coding expert so there are likely many improvements that can be made to the code for efficiency and such - feel free to contribute to the project! I'm just happy to be having fun with the learning process. 
 
-With v1.0.0 the random feature references and array URLs pulled from one of McMaster's sitemap XML files with over 57,000 unique URLs for browsing their online catalog. While this doesn't get you the resolution that individual part numbers would, its still a blast to see the vast scope of product offerings from McMaster this way.
+With v1.0.0 the random feature references an array of URLs pulled from one of McMaster's sitemap XML files with over 57,000 unique URLs for browsing their online catalog. While this doesn't get you the resolution that individual part numbers would, it's still a blast to see the vast scope of product offerings from McMaster this way.
 
 ## Wishful Thinking Improvements
 - Have the array of item categories autoupdate according to the latest XML files available through McMaster's Sitemap files
