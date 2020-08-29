@@ -1,17 +1,29 @@
 {
 	"manifest_version":2,
 	"name": "McMaster Extension",
-	"version": "1.0.0",
-
+	"version": "2.0.0",
+	"options_page": "options.html",
 	"icons":{"16":"icon_16.png",
 			"48":"icon_48.png",
 			"128":"icon_128.png"
-			},
-
+	},
 	"browser_action": {
       "default_popup": "popup.html"
     },
-"permissions": [
-	"activeTab"
-]
+	"background": {
+		"scripts": ["background.js", "html2canvas.js", "qrcode.js"],
+		"persistent": false
+	},
+	"content_scripts": [
+		{
+		 "matches": ["https://*.mcmaster.com/*"],
+		 "js": ["content.js"],
+		 "run_at":"document_end"
+		}
+	],
+	"permissions": [
+		"tabs",
+		"webNavigation",
+		"storage"
+	]
 }
