@@ -2,13 +2,12 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     if (request.partnumberquery == "blankPartNum") {
         if (document.getElementsByClassName("bk attrComp").length == 0) {
             alert("Enter a Part Number or navigate to a Product Detail page and click again");                
-            sendReponse({backtopopup: "wrong page"});
+            sendResponse({backtopopup: "wrong page"});
         }
         else if (request.query == "cad") {
             partNumber = document.getElementsByClassName("bk attrComp")[0].innerText;
             isthereCAD = document.getElementsByClassName("button-save--stacked button-tertiary--cad HideOnItmPrint save-cad").length;
             if (isthereCAD >0) {
-            alert("sending cad");
             sendResponse({backtopopup: "carryon", partNumber:partNumber});
             }
             else {
@@ -52,18 +51,13 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     if (request.command == "runDownload") {  
         var fileformat = request.filetype1;
         if (document.getElementsByClassName("WarningTxt").length > 0 || document.getElementsByClassName("jg jl").length > 0) {
-            sendResponse({end: "invalidcad"});
+            sendResponse({wrapup: "invalidcad"});
+        }
+        else if (document.getElementsByClassName("button-save--stacked button-tertiary--cad HideOnItmPrint save-cad").length !== 1) {
+            alert("This part does not have CAD available.");
+            sendResponse({wrapup: "finished"});
         }
         else {
-
-            isthereCAD = document.getElementsByClassName("button-save--stacked button-tertiary--cad HideOnItmPrint save-cad").length;
-            if (isthereCAD !== 1) {
-            alert("This part does not have CAD available.");
-            sendResponse({end: "finished"});
-            }
-            else {
-        
-
             //eliminate the CAD option that is selected by default based on user's past CAD download selection
             var i;
             for (i = 0; i<document.getElementsByClassName("li--cad li-cad--slctd").length; i++) {
@@ -88,9 +82,8 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
             };
 
             var savefile = document.getElementsByClassName("button-save--stacked button-tertiary--cad HideOnItmPrint save-cad")[0];
-            savefile.click();
-            sendResponse({end: "finished"});
-            };
+            setTimeout(function() {savefile.click();}, 100);
+            sendResponse({wrapup: "finished"});          
         };
     };    
-})
+});
