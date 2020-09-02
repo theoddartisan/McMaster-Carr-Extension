@@ -182,15 +182,17 @@ function cadUpdateCheck(partnum, filechoice) {
 	chrome.webNavigation.onHistoryStateUpdated.addListener(function cadupdate(tabId, info) {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			chrome.tabs.sendMessage(tabs[0].id, {command: "runDownload", filetype1: filechoice}, function rundownloadlistener(response) {
-				if (response.end == "invalidcad") {
+				if (response.wrapup == "invalidcad") {
 					alert("Invalid Part Number. Try again.");
 					chrome.tabs.remove(tabs[0].id);
 					chrome.webNavigation.onHistoryStateUpdated.removeListener(cadupdate);
 					chrome.webNavigation.onHistoryStateUpdated.removeListener(rundownloadlistener);
 				}	
-				else if (response.end == "finished") {
+				else if (response.wrapup == "finished") {
 					console.log("finished");
 					chrome.webNavigation.onHistoryStateUpdated.removeListener(cadupdate);
+					chrome.webNavigation.onHistoryStateUpdated.removeListener(rundownloadlistener);
+
 				};
 			});
 		});
