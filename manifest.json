@@ -1,7 +1,7 @@
 {
 	"manifest_version":2,
-	"name": "McMaster Extension",
-	"version": "2.0.1",
+	"name": "McMaster-Carr Extension",
+	"version": "3.0.1",
 	"options_page": "options.html",
 	"icons":{"16":"icon_16.png",
 			"48":"icon_48.png",
@@ -11,7 +11,7 @@
       "default_popup": "popup.html"
     },
 	"background": {
-		"scripts": ["background.js", "html2canvas.js", "qrcode.js"],
+		"scripts": ["background.js", "html2canvas.js", "qrcode.js", "clipboard.js"],
 		"persistent": false
 	},
 	"content_scripts": [
@@ -24,6 +24,7 @@
 	"permissions": [
 		"tabs",
 		"webNavigation",
-		"storage"
+		"storage",
+		"downloads"
 	]
 }
