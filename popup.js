@@ -78,71 +78,9 @@ window.addEventListener('load', function() {
 								};
 								sendResponse();
 							};
-							
-							/*for (i=0; i<7; i++) {
-								if (i<6) {
-									var checkDuplicates;
-									if (getOccurrence(ranks, i) > 1) {
-										checkDuplicates=true;
-									};
-									var checkValues;
-									if (ranks[i] < -1 || ranks[i] > 5) {
-										checkValues[i]=true;
-									};
-									var checkBlanks;
-									if (ranks[i] == -1) {
-										checkBlanks[i] = false;
-									}
-									else {
-										checkBlanks[i] = true;
-									};
-								}
-								else {
-									if (checkDuplicates == true) {
-										var poerrorslot = document.getElementById('poError');
-										poerrorslot.textContent = 'Error! Check settings for duplicate values in Purchase Order Table Elements list.';
-										var tableDiv = document.getElementById('potables');
-										document.getElementById('pobutton').disabled = true;
-										tableDiv.textContent = '';
-										sendResponse();
-									}
-									else if (checkValues.includes(true) == true) {
-										var poerrorslot = document.getElementById('poError');
-										poerrorslot.textContent = 'Error! Check settings for values in Purchase Order Table Elements list. All values must all be between 1 and 6.';
-										var tableDiv = document.getElementById('potables');
-										document.getElementById('pobutton').disabled = true;
-										tableDiv.textContent = '';
-										sendResponse();
-									}
-									else if (checkBlanks.includes(true) == false) {
-										var poerrorslot = document.getElementById('poError');
-										poerrorslot.textContent = 'Error! Check settings for values in Purchase Order Table Elements list. You must have at least one element numbered.';
-										var tableDiv = document.getElementById('potables');
-										document.getElementById('pobutton').disabled = true;
-										tableDiv.textContent = '';
-										sendResponse();
-									}
-									else {
-										for (i=0; i<6; i++) {
-											if (ranks[i] == -1) {
-											}
-											else {
-												document.getElementById('title'+ ranks[i].toString()).innerText = cells1[i];
-												document.getElementById('content'+ranks[i].toString()).innerText = cells2[i];
-											};
-										};
-										for (j=0; j<6; j++) {
-											if (document.getElementById('title'+ j.toString()).innerText == "") {
-												document.getElementById('title'+ j.toString()).remove();
-												document.getElementById('content'+j.toString()).remove();
-											};
-										};
-										sendResponse();
-									};
-								};
-							};*/
 						});
-						
+						});
+
 					}
 					else if (request.poInfoReply == "specifySize") {
 						var poerrorslot = document.getElementById('poError');
