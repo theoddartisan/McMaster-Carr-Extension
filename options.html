@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head><title>McMaster Extension Settings</title><h1>McMaster Extension Settings</h1><style>
+    <head><title>McMaster Extension Settings</title><h1>McMaster-Carr Extension Settings</h1>
+    <style>
        td img{
             display: block;
             margin-left: auto;
             margin-right: auto;
             border: 2px solid black;
         }
-        table {
+        table.labels {
             border-collapse: collapse;
             border: none;
-
         }
-        td:hover {
+        table.labels td:hover {
             background-color:#f5f5f5;
         }
 
+        table.characterreplacement {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 33%;
+            padding: 10px;
+        }
+
+        .grid-item {
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            font-size: 12px;
+            text-align: left;
+        }
     </style>
     </head>
         <body>
-            Default CAD Filetype:
+            <div id="status1"></div>
+            <button id="save1">Save Changes</button><br><br>
+            <strong>Default CAD Filetype:</strong>
                 <select name="filetype" id="filetype">
                     <option value="3dedrw">3-D EDRW</option>
                     <option value="3diges">3-D IGES</option>
@@ -30,28 +48,116 @@
                     <option value="2ddxf">2-D DXF</option>
                     <option value="2dsolidworks">2-D Solidworks</option>
                 </select>
-            <br>Note: 2D and 3D PDF files are not currently available to download through this extension.<br><br>
-
-            Default Label Format (see below for example images):
+            <br>Note: 2D and 3D PDF files are not currently available to download through this extension.<br>
+            Tip: You can download multiple CAD files in a row by entering the Part Numbers as a comma-separated list<br><br>
+            
+            <strong>Customize Automatic Renaming:</strong><br>
+              <input type="checkbox" id="renameAuto" name="renameAuto" value=true>
+              <label for="renameAuto">Automatically rename CAD files using McMaster-Carr product title info before download</label>
+              <div class="grid-container">
+                <div class="grid-item"><center><img src="\images\optionsExamples\part_detail_page_example.png" style="width:80%"></center></div>
+                <div class="grid-item"><u>Example:</u> This product's default file name is "96144A111_METRIC CLASS 12.9 SOCKET HEAD CAP SCREW" but with automatic renaming through this extension the file name will now default to "Fine-Thread Alloy Steel Socket Head Screw M6 x 0.75 mm Thread, 12 mm Long, Part 96144A111"</div>
+              </div>
+                <br>
+            
+            These characters are not allowed in file names: <strong>/ \ : * ? " < > |</strong> Select the substitutions for the <strong>/</strong> and <strong>"</strong> characters below <br>
+            <table class="characterreplacement">
+                <tr>
+                    <td>Character</td>
+                    <td>Replacement</td>
+                </tr>
+                <tr>
+                    <td><center>/</center></td>
+                    <td><select class="nameSubs" id="slashSub" name="slashSub">
+                        <option value="[">[</option>
+                        <option value="-">-</option>
+                        <option value="_">_</option>
+                        <option value="(">(</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><center>"</center></td>
+                    <td><select class="nameSubs" id="quoteSub" name="quoteSub">
+                        <option value="in">in</option>
+                        <option value="inch">inch</option>
+                        <option value="''">''</option>
+                        </select>
+                    </td>
+                </tr>
+            </table><br>
+            <table class="filenames">
+                <tr>
+                    <td colspan="2">Enter custom naming conventions in the text box below. <br>
+                    - You can set substitutions for other words or characters here. You can set things like abbreviations to suit your style <br>
+                    - You enter the text you want to replace followed by an equal sign (=) followed by the text you want to use instead<br>
+                    - Separate each substitution with a semicolon (;)<br>
+                    - To remove text without substitution leave the right side of the equal sign (=) blank<br>
+                    - The left side of the equal sign (=) is not case sensitive but the right side is case sensitive<br>
+                    - These characters are not allowed in file names: <strong>/ \ : * ? " < > |</strong> Do not include them in your substitutions<br>
+                    - Do not include spaces before or after any equal sign (=) or semicolon (;) unless specifically needed for creating your naming structure<br>
+                    - Here is are examples for how text should be entered in the text box below:<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Example 1<br><img src="\images\optionsExamples\part_detail_page_example.png" style="float:left"></td>
+                    <td>Example 2<br><img src="\images\optionsExamples\part_detail_page_example2.png" style="float:left"></td>
+                </tr>                  
+                <tr>
+                    <td><u>Default CAD File Name:</u> 96144A111_METRIC CLASS 12.9 SOCKET HEAD CAP SCREW<br><u>Custom CAD File Naming:</u> fine-thread=;Alloy Steel=AStl;socket head screw=SH_Screw;<br><u>Resulting File Name:</u> AStl SH_Screw M6 x 0.75 mm Thread, 12 mm Long, Part 96144A111</td>
+                    <td><u>Default CAD File Name:</u> 3313N180_ HIGH STRENGTH STEEL THREADED ROD<br><u>Custom CAD File Naming:</u> high-strength=hs;steel=Stl;zinc yellow-chromate plated=;size=;<br><u>Resulting File Name:</u> hs Stl Threaded Rod, 3[8in-16 Thread, 1-1[2in Long, Part 3313N18</td>
+                </tr>  
+            </table><br>
+            <strong>Custom CAD File Naming:</strong><br>
+            <textarea id="stringSub" name="paragraph_text" cols="100" rows="5"></textarea>
+            <br>
+            <button id="cadnamesave">Download CAD Filename Settings Text File</button><br>
+            Tip: Download the CAD Filename Settings text file so you can have a copy in case your saved data is erased. You can also easily share your settings with peers for consistent filenames on projects.
+            <br><br>
+            <strong>Default Label Format (see below for example images):</strong>
                 <select name="labeltype" id="labeltype">
                     <optgroup label="Laser/Inkjet">
                         <option value="inkjeta">1/2" x 1 3/4"</option>
                         <option value="inkjetb">1" x 2 5/8"</option>
                         <option value="inkjetc">1" x 4"</option>
-                        <option value="inkjetd">2" x 4"</option>
+                        <option value="inkjetd1">2" x 4" Image</option>
+                        <option value="inkjetd2">2" x 4" QR Code</option>
                         <option value="inkjete">3 5/16" by 4"</option>
-                    <optgroup label="Dymo LabelWriter"
+                    <optgroup label="Dymo LabelWriter">
                         <option value="dymoa">3/4" x 2 1/2"</option>
-                        <option value="dymob">1" x 1"</option>
+                        <option value="dymob1">1" x 1" Text</option>
+                        <option value="dymob2">1" x 1" QR Code</option>
                         <option value="dymoc">1" x 3 1/2"</option>
                         <option value="dymoc">1 1/8" x 3 1/2"</option>
-                        <option value="dymod">2 1/8" x 4"</option>
-                        <option value="dymoe">2 5/16" x 4"</option>
+                        <option value="dymod1">2 1/8" x 4" Image</option>
+                        <option value="dymod2">2 1/8" x 4" QR Code</option>
+                        <option value="dymoe1">2 5/16" x 4" Image</option>
+                        <option value="dymoe2">2 5/16" x 4" QR Code</option>
                         <option value="dymof">4" x 6"</option>
                 </select>
-            <br><br>
-           
-            Select your Extension Tools:
+            <br>
+            Tip: You can download multiple labels in a row by entering the Part Numbers as a comma-separated list<br><br>
+
+            <strong>Select your Purchase Order Table Elements:</strong><br>
+            - Number each element in the order that you want them to appear in the information table (1 - 6) <br>
+            - Leave an element number box blank if you want to omit it from the information table <br>
+            - Include the "Blank Table Cell" if you need to leave a column on your spreadsheet blank when copying and pasting (i.e. for where you need to enter an order quantity)
+            <br>
+              <input type="number" id="poPartNumTool" name="poPartNum" min="1" max="6">
+              <label for="poPartNum"> Part Number</label><br>
+              <input type="number" id="poDescriptionTool" name="poDescription" min="1" max="6">
+              <label for="poDescription"> Description</label><br>
+              <input type="number" id="poUnitPriceTool" name="poUnitPrice" min="1" max="6">
+              <label for="poUnitPrice"> Unit Price</label><br>
+              <input type="number" id="poUnitQuantityTool" name="poUnitQuantity" min="1" max="6">
+              <label for="cad"> Unit Quantity</label><br>
+              <input type="number" id="poPartURLTool" name="poPartURL" min="1" max="6">
+              <label for="poPartURL"> Part URL</label><br> 
+              <input type="number" id="poBlankTool" name="poBlank" min="1" max="6">
+              <label for="poBlank"> Blank Table Cell</label><br>
+            <br><br>    
+            
+            <strong>Select your Extension Tools:</strong>
             <br>
               <input type="checkbox" id="homeTool" name="home" value=true>
               <label for="home"> Home Button</label><br>
@@ -63,19 +169,19 @@
               <label for="cad"> CAD Download Tool</label><br>
               <input type="checkbox" id="labelTool" name="label" value=true>
               <label for="label"> Label Maker Tool</label><br>
-              <input type="checkbox" id="optionsTool" name="options" value=true>
-              <label for="options"> Options Shortcut (If disabled, you can still access options settings by going through chrome://extensions)</label><br>
+              <input type="checkbox" id="poTool" name="po" value=true>
+              <label for="po"> Purchase Order Tool</label><br>
             <br><br>
 
-            <div id="status"></div>
-            <button id="save">Save</button>
+            <div id="status2"></div>
+            <button id="save2">Save Changes</button>
             <br><br>
             <a href="mailto:nick@theoddartisan.com">Feedback? Please send your comments, ideas, and suggestions!</a><br><br>
             <a href="https://github.com/theoddartisan/ChromeMcMasterExtension" target="_blank">GitHub Repository</a>
-                        <br><br>
+            <br><br>
 
-            Label Formats (click on images to visit McMaster Product Detail page for label):
-            <div><table width="50%" border="3px" align="left">
+            <strong>Label Formats (click on images to visit McMaster Product Detail page for label):</strong>
+            <div><table class="labels" width="50%" border="3px" align="left">
                 <tr>
                     <td><a href="https://www.mcmaster.com/8102T21" target="_blank"><img src="\images\labelFormats\8102T21_0.5x1.75_label.png" style="height: 50px; width:175px"></a></td>
                     <td><a href="https://www.mcmaster.com/8102T23" target="_blank"><img src="\images\labelFormats\8102T23_1x2.625_label.png"style="height: 100px; width:262px"></a></td>
