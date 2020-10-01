@@ -17,7 +17,10 @@ I have always enjoyed browsing through the vast catalog of industrial supply pro
 - Create a feature to browse through products recently added to the catalog
 
 ## History
-v3.0.0: Released September 30, 2020
+v3.0.1: Released September 30
+- Small bug fixes
+
+v3.0.0: Released September 28, 2020
 - Added a Part Detail Table feature to allow users to quickly copy part information in a table format for insertion into purchase order forms or spreadsheets
 - Added a CAD file renaming feature to allow users to download CAD files with more useful names with options for how to customize words and characters in file names
 - Updated CAD Download feature to allow automatic downloading of CAD files for multiple parts from a comma-separated list of part numbers

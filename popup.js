@@ -18,23 +18,26 @@ window.addEventListener('load', function() {
 						var cells1 = ["Part Number", "Description", "Unit Price", "Unit Quantity", "Part URL", "Blank Cell"];
 						var cells2 = [poPartNumber, poDescription, poUnitPrice, poUnitQuantity, poPartURL, ""];
 						chrome.storage.sync.get(['poPartNumRank', 'poDescriptionRank', 'poUnitPriceRank', 'poUnitQuantityRank', 'poPartURLRank', 'poBlankCellRank'], function(item){
-							var ranks = [item.poPartNumRank-1, item.poDescriptionRank-1, item.poUnitPriceRank-1, item.poUnitQuantityRank-1, item.poPartURLRank-1, item.poBlankCellRank-1];					
-							for (i=0; i<6; i++) {
+							var ranks = [item.poPartNumRank-1, item.poDescriptionRank-1, item.poUnitPriceRank-1, item.poUnitQuantityRank-1, item.poPartURLRank-1, item.poBlankCellRank-1];
+							for (i=0; i<7; i++) {
 								var checkDuplicates;
 								if (getOccurrence(ranks, i) > 1) {
 									checkDuplicates=true;
 								};
-								var checkValues = Array(6).fill(false);
-								if (ranks[i] <= -1 || ranks[i] > 5 || isNaN(ranks[i])) {
-									if (ranks[i] == "") {
-										checkValues[i]=false;
-									}
-									else {
-										checkValues[i]=true;
-									};
+								var checkValues;
+								if (ranks[i] < -1 || ranks[i] > 5) {
+									checkValues=true;
 								};
 							};
-							if (checkDuplicates == true) {
+							if (ranks.includes(NaN)) {
+								var poerrorslot = document.getElementById('poError');
+								poerrorslot.textContent = 'To use this tool, first visit the Settings and set values for Purchase Order Table Elements.';
+								var tableDiv = document.getElementById('potables');
+								document.getElementById('pobutton').disabled = true;
+								tableDiv.textContent = '';
+								sendResponse();
+							}
+							else if (checkDuplicates == true) {
 								var poerrorslot = document.getElementById('poError');
 								poerrorslot.textContent = 'Error! Check settings for duplicate values in Purchase Order Table Elements list.';
 								var tableDiv = document.getElementById('potables');
@@ -45,6 +48,14 @@ window.addEventListener('load', function() {
 							else if (checkValues == true) {
 								var poerrorslot = document.getElementById('poError');
 								poerrorslot.textContent = 'Error! Check settings for values in Purchase Order Table Elements list. All values must all be between 1 and 6.';
+								var tableDiv = document.getElementById('potables');
+								document.getElementById('pobutton').disabled = true;
+								tableDiv.textContent = '';
+								sendResponse();
+							}
+							else if (ranks.reduce((a, b) => a + b, 0) < -5) {
+								var poerrorslot = document.getElementById('poError');
+								poerrorslot.textContent = 'Error! Check settings for values in Purchase Order Table Elements list. You must have at least one element numbered.';
 								var tableDiv = document.getElementById('potables');
 								document.getElementById('pobutton').disabled = true;
 								tableDiv.textContent = '';
@@ -68,6 +79,8 @@ window.addEventListener('load', function() {
 								sendResponse();
 							};
 						});
+						});
+
 					}
 					else if (request.poInfoReply == "specifySize") {
 						var poerrorslot = document.getElementById('poError');

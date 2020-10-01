@@ -72,11 +72,11 @@ function restore_options() {
     cadToolselect: true,
     labelToolselect: true,
     poToolselect: true,
-    poPartNumRank: 1,
-    poDescriptionRank: 2,
-    poUnitPriceRank: 3,
-    poUnitQuantityRank: 4,
-    poPartURLRank: 5,
+    poPartNumRank: '',
+    poDescriptionRank: '',
+    poUnitPriceRank: '',
+    poUnitQuantityRank: '',
+    poPartURLRank: '',
     poBlankCellRank: ''
     }, function(items) {
     document.getElementById('filetype').value = items.defaultFiletype;

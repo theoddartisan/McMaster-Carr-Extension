@@ -1,7 +1,7 @@
 {
 	"manifest_version":2,
 	"name": "McMaster-Carr Extension",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"options_page": "options.html",
 	"icons":{"16":"icon_16.png",
 			"48":"icon_48.png",
